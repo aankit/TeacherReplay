@@ -12,7 +12,7 @@ class Video(object):
 		self.camera.start_recording(fname)
 		self.camera.wait_recording(duration)
 		self.camera.stop_recording()
-		return 1
+		return 0
 
 	# def startRecording(self, fname):
 	# 	self.camera.start_recording(fname)
@@ -32,7 +32,7 @@ if __name__ == '__main__':
 	print start
 	recording = 0
 	video.camera.start_recording('picam_test.h264')
-	video.camera.vflip = True
+	video.camera.vflip = True 
 	while recording < 10:
 		recording = time.time() - start
 		print '%d elapsed' %(recording)

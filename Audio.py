@@ -17,6 +17,7 @@ Non-blocking mode (start and stop recording):
 import pyaudio
 from pydub import AudioSegment
 import wave
+import subprocess
  
 
 class Audio(object):
@@ -26,13 +27,13 @@ class Audio(object):
         ##filenames
         self.fname = fname
         ##audio config
-        self.mode = mode
-        self.channels = channels
-        self.rate = rate
-        self.frames_per_buffer = frames_per_buffer
-        self._pa = pyaudio.PyAudio()
-        self.wavefile = self._prepare_file(self.fname, self.mode)
-        self._stream = None
+        # self.mode = mode
+        # self.channels = channels
+        # self.rate = rate
+        # self.frames_per_buffer = frames_per_buffer
+        # self._pa = pyaudio.PyAudio()
+        # self.wavefile = self._prepare_file(self.fname, self.mode)
+        # self._stream = None
  
     def __enter__(self):
         return self
@@ -40,6 +41,12 @@ class Audio(object):
     def __exit__(self, exception, value, traceback):
         self.close()
  
+    def alsa_record(self, duration):
+        print 'subprocessed called'
+        subprocess.call(['arecord', '--duration=30', '--format=cd', self.fname])
+        print 'subprocess returned'
+        return 0
+
     def record(self, duration):
         # Use a stream with no callback function in blocking mode
         self._stream = self._pa.open(format=pyaudio.paInt16,
