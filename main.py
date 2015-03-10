@@ -15,8 +15,9 @@ def WriteLog(line):
   f.close()
 
 #get today's date & create content folders
-today = datetime.date.today().strftime('%m.%d.%Y')
-subprocess.call(['mkdir', today])
+year, month, day = datetime.date.today().strftime('%Y %B %d').split()
+subprocess.call(['mkdir', year])
+subprocess.call(['cd', year])
 
 #processing queues
 video_encode_queue = []
@@ -52,7 +53,7 @@ while schoolDay:
 	video.camera.vflip = True
 	video.camera.start_recording('%s/%s/%s.h264' %(className, today, filename))
 	subprocess.call(['arecord', '--duration=%d' (recordingDuration), '--format=cd', 
-		'%s/%s/%s.wav' %(className, today, filename)])
+		'%s/%s/%s.wav' %(className, , filename)])
 	print 'recorded!!'
 	# audio.alsa_record(30)
 	# x = 0
